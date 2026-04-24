@@ -10,8 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Objects;
+import java.util.List;
+
 
 
 @Controller
@@ -27,14 +29,17 @@ public class FileController {
     public String files() {
         return "files";
     }
-
+    //Нужно добавить автоген имён файлов
     @PostMapping("/upload")
-    public String handleUpload(@RequestParam("myFile") MultipartFile file) throws IOException {
-        if (!file.isEmpty()) {
-            Path destination = basePath.resolve(Objects.requireNonNull(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+    public String handleUpload(@RequestParam("files") List<MultipartFile> files) throws IOException {
+        if (!files.isEmpty()) {
+            for (MultipartFile file : files) {
+                Files.copy(file.getInputStream(),
+                        Paths.get(basePath.toString(), file.getOriginalFilename()).normalize(),
+                        StandardCopyOption.REPLACE_EXISTING );
+            }
+
         }
-        // Редирект обратно на страницу выбора файлов
         return "redirect:/files";
     }
 
