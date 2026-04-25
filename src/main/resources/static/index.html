@@ -1,13 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>files</title>
 </head>
 <body>
-  <form method="POST" action="/upload" enctype="multipart/form-data">
-    <input type="file" name="files" required multiple>
+<form method="POST" action="/upload" enctype="multipart/form-data">
+    <!-- Добавил id="fileInput" -->
+    <input type="file" id="fileInput" name="files" required multiple>
+
     <button type="submit">Вгрузить на сервак</button>
-  </form>
+
+    <script>
+        const allowed = ['.mp4', '.pdf', '.txt', '.jpg', '.zip', '.jpeg', '.png', '.gif', '.md'];
+        document.querySelector('form').onsubmit = function (e) {
+            const fileInput = document.getElementById('fileInput'); // Берем сам элемент
+            const files = fileInput.files;
+
+            for (let file of files) {
+                if (!file.name.includes('.')) {
+                    e.preventDefault();
+                    return false;
+                }
+
+                const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+                if (!allowed.includes(ext)) {
+                    alert("Формат файла не поддерживается");
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        };
+    </script>
+</form>
 </body>
 </html>
