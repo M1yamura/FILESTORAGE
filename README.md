@@ -5,6 +5,6 @@ For now it only support /files endpoint
 
 # TODO:
 - [ ] /storage endpoints
-- [ ] delete feature
+- [ ] "delete" methode
 - [ ] update UI
 - [ ] some other stuff
