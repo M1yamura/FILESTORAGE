@@ -1,5 +1,4 @@
 # FILESTORAGE
-In the near future, this should be local cross-wifi web storage 
 
 For now it only support /files endpoint
 
